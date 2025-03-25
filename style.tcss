@@ -1,0 +1,242 @@
+
+
+/* UTILITIES */
+
+.invisible{
+    visibility: hidden;        
+}
+.d-none{
+    display: none;
+}
+.dock-right{
+    dock: right;
+}
+.dock-left{
+    dock: left;
+}
+.text-aligh-center{
+    text-align: center;
+}
+.text-aligh-right{
+    text-align: right;
+}
+.w-32{
+    width: 32%;
+}
+.w-36{
+    width: 36%;
+}
+.w-50{width: 50%;}
+.w-100{width: 100%;}
+.w-auto{width: auto;}
+.padding-box-1{
+    padding: 1 2;
+}
+.border-top-warning{
+    border-top: outer $warning;
+}
+.border-top-error{
+    border-top: outer $error;
+}
+.border-top-success{
+    border-top: outer $success;
+}
+.border-top-info{
+    border-top: outer $primary;
+}
+.bg-primary{ background: $primary }
+.bg-success{ background: $success }
+.bg-error{ background: $error }
+.bg-warning{ background: $warning }
+.margin-left-1{ margin-left: 1; }
+.margin-left-2{ margin-left: 2; }
+.margin-left-3{ margin-left: 3; }
+.margin-left-4{ margin-left: 4; }
+.margin-left-5{ margin-left: 5; }
+.margin-right-1{ margin-right: 1; }
+.margin-right-2{ margin-right: 2; }
+.margin-right-3{ margin-right: 3; }
+.margin-right-4{ margin-right: 4; }
+.margin-right-5{ margin-right: 5; }
+.margin-top-1{ margin-top: 1; }
+.margin-top-2{ margin-top: 2; }
+.margin-top-3{ margin-top: 3; }
+.margin-top-4{ margin-top: 4; }
+.margin-top-5{ margin-top: 5; }
+
+
+Toast.-success .toast--title {
+    color: $success;
+}
+Toast.-information .toast--title {
+    color: $primary;
+}
+Toast.-error .toast--title {
+    color: $error;
+}
+Toast.-warning .toast--title {
+    color: $warning;
+}
+
+Toast.-information {
+    border-left: thick $primary;
+}
+
+Toast.-success {
+    border-left: thick $success;
+}
+
+Toast.-warning {
+    border-left: thick $warning;
+}
+
+Toast.-error {
+    border-left: thick $error;
+}
+
+ListView {
+    width: 30;
+    height: auto;
+    margin: 2 2;
+}
+
+Label.listitem {
+    padding: 1 2;
+}
+
+.sm-btn{
+    border:none;
+    height: 3;
+    width: 2;
+    padding: 0;
+}
+
+
+/* MAIN */
+.hostBox{
+    background: black 80%;
+    layout: vertical;
+    height: 10;
+    margin-bottom: 0;
+    border: wide white 50%;
+}
+.hostBox.expanded{
+    height: 23;
+}
+
+.LogReader{
+    background: rgb(30,30,30);
+    background: rgb(25,25,25);
+    background: rgb(30,30,30);
+    padding-top: 1;
+    padding-left: 2;
+    padding-right: 0;
+    height: 10;
+}
+
+.ServiceController{
+    background: rgb(35,35,35);
+    background: rgb(30,30,30);
+    background: rgb(25,25,25);
+    padding-left: 2;
+    padding-right: 2;
+    padding-top: 1;
+    padding-bottom: 1;
+    height: 8;
+}
+
+#start-service, #stop-service{
+    dock:left;
+}
+
+.service-btns{
+    height: 7;
+}
+.service-btns Button{
+    height: 3;
+    width: 20;
+}
+
+.header-title{
+    height: 3;
+    padding-top: 1;
+}
+#status-btn{
+    width: 100%;
+}
+
+.host-header-label{
+    padding: 0 2;
+    background: rgb(50,50,50);
+    height: 4;
+}
+
+LoadingIndicator{
+    color: rgb(100,200,240);
+    background: black 50%;
+    text-align: center;
+}
+
+.get-logs{
+    height: 3;
+}
+
+Select{
+    padding-bottom: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
