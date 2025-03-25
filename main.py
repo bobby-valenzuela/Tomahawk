@@ -1,9 +1,16 @@
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal,Vertical, VerticalScroll
-from textual.widgets import Label,Button,LoadingIndicator,RichLog,TabbedContent,TabPane,Select,Header
-from functions import get_hosts,get_service_state,send_ssh_cmd,get_ssh_hosts,enable_host,remove_host,is_host_enabled
-import asyncio
-from textual import work,on
+from textual.widgets import Label,Button,RichLog,TabbedContent,TabPane,Select
+from textual import on
+from functions import (
+        get_hosts,
+        get_service_state,
+        send_ssh_cmd,
+        get_ssh_hosts,
+        enable_host,
+        remove_host,
+        is_host_enabled
+)
 
 
 class ServiceButtons(Vertical):
@@ -65,8 +72,9 @@ class ServiceButtons(Vertical):
             # self.notify("Apache state updated!", severity="information", timeout=5, title="Apache Service")
 
 
-        self.update_service_details()
-        event.button.disabled=False
+        if button_id != "remove-host":
+            self.update_service_details()
+            event.button.disabled=False
 
     def compose(self) -> ComposeResult:
         self.host_name = f"{self.id}".replace("svc-btns-","")
