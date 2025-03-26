@@ -34,6 +34,13 @@ uv sync && uv run main.py
 
 <br />
 
+Run locally in browser
+```bash
+textual server main.py
+```
+
+<br />
+
 ## How it works  
 
 <br />
