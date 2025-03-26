@@ -75,7 +75,7 @@ class ServiceButtons(Vertical):
         elif button_id == "status-btn":
             state = self.get_apache_status()
             self.update_service_details(state)
-            self.notify("Apache state updated!", severity="information", timeout=5, title="Apache Service")
+            self.notify("Apache state refreshed!", severity="information", timeout=5, title="Apache Service")
         elif button_id == "remove-host":
             remove_host(self.host_name)
 
