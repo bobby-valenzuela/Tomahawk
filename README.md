@@ -1,5 +1,5 @@
 # Tomahawk
-Manage the apache service on multiple remote systems via SSH with a simple TUI.
+Manage the apache service on multiple remote systems via SSH from your terminal with a simple TUI.
 
 <br />
 
