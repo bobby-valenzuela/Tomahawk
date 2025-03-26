@@ -1,6 +1,6 @@
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal,Vertical, VerticalScroll
-from textual.widgets import Label,Button,RichLog,TabbedContent,TabPane,Select,Footer
+from textual.widgets import Label,Button,RichLog,TabbedContent,TabPane,Select,Footer,Header
 from textual.binding import Binding
 from textual import on
 from functions import (
@@ -226,6 +226,7 @@ class Tomahawk(App):
     def compose(self) -> ComposeResult:
 
         """Create host widgets(s)"""
+        yield Header()
         self.get_host_data()
         saved_hosts = [ Host(classes="hostBox", id=f"host-{name[0]}") for name in self.hosts ]
         yield VerticalScroll( *saved_hosts , id="host-container")
