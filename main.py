@@ -1,6 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal,Vertical, VerticalScroll
-from textual.widgets import Label,Button,RichLog,TabbedContent,TabPane,Select
+from textual.widgets import Label,Button,RichLog,TabbedContent,TabPane,Select,Footer
+from textual.binding import Binding
 from textual import on
 from functions import (
         get_hosts,
@@ -205,6 +206,19 @@ class Tomahawk(App):
 
     CSS_PATH = "style.tcss"
 
+    BINDINGS = [
+        Binding(key="^q", action="quit", description="Quit the app"),
+        # Binding(
+        #     key="question_mark",
+        #     action="help",
+        #     description="Show help screen",
+        #     key_display="?",
+        # ),
+        # Binding(key="delete", action="delete", description="Delete the thing"),
+        # Binding(key="j", action="down", description="Scroll down", show=False),
+    ]
+
+
     def get_host_data(self):
         self.hosts = get_hosts()
 
@@ -222,6 +236,7 @@ class Tomahawk(App):
         yield Select.from_values(LINES, id="host-select",classes="margin-bottom-5")
 
         # yield Label("Quit: ctrl+q",classes="margin-left-1 margin-bottom-1")
+        yield Footer()
 
     @on(Select.Changed)
     def select_changed(self, event: Select.Changed) -> None:
