@@ -16,9 +16,11 @@ from functions import (
 class ServiceButtons(Vertical):
 
 
-    def update_service_details(self):
+    def get_apache_status(self):
+        return get_service_state("apache",self.host_name)
+
+    def update_service_details(self,svc_state):
         label = self.query_one(".host-header-label",Button)
-        svc_state = get_service_state("apache",self.host_name)
         label.label = f"{svc_state}"
         start_btn = self.query_one("#start-service")
         stop_btn = self.query_one("#stop-service")
@@ -55,25 +57,30 @@ class ServiceButtons(Vertical):
         button_id = event.button.id
         event.button.disabled=True
         if button_id == "start-service":
-            send_ssh_cmd(self.host_name,"sudo systemctl start apache2")
+            response = send_ssh_cmd(self.host_name,"sudo systemctl start apache2 && echo 1")
+            if response == '1':
+                self.update_service_details("Active")
             self.notify("Apache service started!", severity="success", timeout=5, title="Apache Service")
+
         elif button_id == "stop-service":
-            send_ssh_cmd(self.host_name,"sudo systemctl stop apache2")
+            response = send_ssh_cmd(self.host_name,"sudo systemctl stop apache2 && echo 1")
+            if response == '1':
+                self.update_service_details("Inactive")
             self.notify("Apache service stopped!", severity="error", timeout=5, title="Apache Service")
         elif button_id == "restart-service":
-            send_ssh_cmd(self.host_name,"sudo systemctl restart apache2")
+            response = send_ssh_cmd(self.host_name,"sudo systemctl restart apache2 && echo 1")
+            if response == '1':
+                self.update_service_details("Active")
             self.notify("Apache service restarted!", severity="success", timeout=5, title="Apache Service")
         elif button_id == "status-btn":
+            state = self.get_apache_status()
+            self.update_service_details(state)
             self.notify("Apache state updated!", severity="information", timeout=5, title="Apache Service")
         elif button_id == "remove-host":
             remove_host(self.host_name)
-            # self.parent_widget.remove()
-            # self.parent_widget.refresh()
-            # self.notify("Apache state updated!", severity="information", timeout=5, title="Apache Service")
 
-
+        # re-enable pressed btn
         if button_id != "remove-host":
-            self.update_service_details()
             event.button.disabled=False
 
     def compose(self) -> ComposeResult:
@@ -118,19 +125,36 @@ class ServiceController(Vertical):
 class Host(Horizontal):
     """Host Widget"""
 
+    def parse_logs(self,log_data):
+        # Split the content based on delimiters
+        parts = log_data.split('fin-error')
+        error_part = parts[0].strip()  # Everything before fin-error
+
+        # Split the remaining part at fin-access
+        remaining = parts[1].split('fin-access')
+        access_part = remaining[0].strip()  # Between fin-error and fin-access
+        service_part = remaining[1].strip()  # After fin-access
+
+        return error_part, access_part, service_part
+
     def refresh_all_logs(self,option) -> None:
+        log_count = 25
         svc_log = self.query_one("#service-log")
         acc_log = self.query_one("#access-log")
         err_log = self.query_one("#error-log")
-        latest_svc_logs = send_ssh_cmd(self.host_name,"journalctl -u apache2 -n 25")
-        latest_acc_logs = send_ssh_cmd(self.host_name,"tail -n 25 /var/log/apache2/access.log")
-        latest_err_logs = send_ssh_cmd(self.host_name,"tail -n 25 /var/log/apache2/error.log")
         svc_log.clear()
         acc_log.clear()
         err_log.clear()
+
+        # Get logs in one command
+        log_content = send_ssh_cmd(self.host_name,f"tail -n {log_count} /var/log/apache2/error.log && echo fin-error && tail -n {log_count} /var/log/apache2/access.log && echo fin-access && journalctl -u apache2 -n {log_count}")
+
+        latest_err_logs,latest_acc_logs,latest_svc_logs = self.parse_logs(log_content)
+
         svc_log.write(latest_svc_logs,animate=True,scroll_end=True)
         acc_log.write(latest_acc_logs,animate=True,scroll_end=True)
         err_log.write(latest_err_logs,animate=True,scroll_end=True)
+
         if option != "no-toast":
             self.notify("Logs Fetched!", severity="success", timeout=5, title="Logging Update")
 
