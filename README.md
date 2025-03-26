@@ -9,7 +9,11 @@ Manage the apache service on multiple remote systems via SSH from your terminal 
 
 # Installing and running
 
-Install dependencies and create virtual environment wuth uv.
+You can download the latest binary from the releases or install the source code (see below).
+
+<br />
+
+Install dependencies and create virtual environment wuth [uv](https://github.com/astral-sh/uv).
 ```bash
 uv sync
 ```
