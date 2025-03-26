@@ -173,7 +173,7 @@ class Host(Horizontal):
         elif button_id == "remove-host":
             self.remove()
             self.refresh()
-            self.notify("Host Removed!", severity="information", timeout=5, title="Hosts")
+            self.notify("Host Removed!", severity="error", timeout=5, title="Hosts")
 
 
     def compose(self) -> ComposeResult:
