@@ -20,6 +20,13 @@ uv sync
 
 <br />
 
+Create sqlite db
+```bash
+sqlite3 tomahawk.db "CREATE TABLE hosts (id INTEGER PRIMARY KEY AUTOINCREMENT, hostname TEXT NOT NULL, isEnabled INTEGER);"
+```
+
+<br />
+
 Activate virtual environment and run program
 ```bash
 uv run main.py
@@ -27,9 +34,11 @@ uv run main.py
 
 <br />
 
+<br />
+
 Or do it all with one command
 ```bash
-uv sync && uv run main.py
+uv sync && sqlite3 tomahawk.db "CREATE TABLE hosts (id INTEGER PRIMARY KEY AUTOINCREMENT, hostname TEXT NOT NULL, isEnabled INTEGER);" && uv run main.py
 ```
 
 <br />
